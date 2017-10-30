@@ -6,15 +6,24 @@ def inicio():
     pg.display.set_caption("teste pygame")
     tela = pg.display.set_mode([300, 300])
     sair = False
-    ret = pg.Rect(10,10, 45, 45)
-
-    ret2 = pg.Rect(10, 100, 230, 60)
+    ret = pg.Rect(10,10, 30, 30)
+    #                posx , posy, largura, altura
+    barra1 = pg.Rect(100, 250, 25, 50)
+    barra2 = pg.Rect(200, 200, 25, 100)
 
     relogio = pg.time.Clock()
-    sup = pg.Surface((200, 200))
-    sup.fill(c.AZUL)
-    sup2 = pg.Surface((100, 100))
-    sup2.fill(c.VERDE)
+
+    #texto
+    font_padrao = pg.font.get_default_font()
+    font_perdeu = pg.font.SysFont(font_padrao, 45)
+
+    pg.font.init()
+
+    sup = pg.Surface((300, 30))
+    sup.fill(c.VERDE)
+    #sup2 = pg.Surface((100, 100))
+    #sup2.fill(c.VERDE)
+
     while sair != True:
 
         for event in pg.event.get():
@@ -38,15 +47,32 @@ def inicio():
                 if event.key == pg.K_UP or event.key == pg.K_w:
                     ret.move_ip(0, -5)
 
+        (xant, yant) = (ret.left, ret.top)
         (ret.left, ret.top) = pg.mouse.get_pos()
         ret.left -= ret.width/2
         ret.top -= ret.height/2
 
+
+
+        if ret.colliderect(barra1):
+            print('barra1')
+            titulo = font_perdeu.render('teste', 1, c.AZUL)
+            tela.blit(titulo, (120, 0))
+            (ret.left, ret.top) = (xant, yant)
+
+        if ret.colliderect(barra2):
+            print('barra2')
+            text = font_perdeu.render('bateu', 1, c.VERMELHO)
+            tela.blit(text, (100, 100))
+            (ret.left, ret.top) = (xant, yant)
+
         relogio.tick(30)
-        tela.fill(c.FUNDO_BRANCO)
-        tela.blit(sup2, [100, 100])
+        tela.fill(c.BRANCO)
+        tela.blit(sup, [0, 0])
+
         pg.draw.rect(tela, c.VERMELHO, ret)
-        pg.draw.rect(tela, c.AZUL, ret2)
+        pg.draw.rect(tela, c.AZUL, barra1)
+        pg.draw.rect(tela, c.VERDE, barra2)
         pg.display.update()
 
 
