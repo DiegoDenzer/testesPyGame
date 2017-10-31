@@ -1,3 +1,5 @@
+from random import randrange
+
 import pygame as pg
 import constantes as c
 
@@ -7,9 +9,10 @@ def inicio():
     tela = pg.display.set_mode([300, 300])
     sair = False
     ret = pg.Rect(10,10, 30, 30)
+
     #                posx , posy, largura, altura
-    barra1 = pg.Rect(100, 250, 25, 50)
-    barra2 = pg.Rect(200, 200, 25, 100)
+    barra1 = pg.Rect(100, 250, randrange(0, 100), randrange(0, 150))
+    barra2 = pg.Rect(200, 200, randrange(0, 100), randrange(0, 150))
 
     relogio = pg.time.Clock()
 
@@ -69,7 +72,9 @@ def inicio():
         relogio.tick(30)
         tela.fill(c.BRANCO)
         tela.blit(sup, [0, 0])
-
+        titulo = font_perdeu.render('teste', 1, c.AZUL)
+        tela.blit(titulo, (120, 0))
+        sup.blit(titulo, (120,0))
         pg.draw.rect(tela, c.VERMELHO, ret)
         pg.draw.rect(tela, c.AZUL, barra1)
         pg.draw.rect(tela, c.VERDE, barra2)
